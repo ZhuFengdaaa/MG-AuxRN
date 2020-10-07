@@ -32,6 +32,12 @@ make -j8
 
 ## Code
 
+### Link Data
+```
+ln -s <image feature path> img_features
+ln -s <object feature path> obj_features
+```
+
 ### Train Speaker
 ```
 bash run/speaker.bash 0
