@@ -1,0 +1,45 @@
+version: 1
+# kind: group
+kind: experiment
+
+# hptuning:
+#   concurrency: 5
+#   matrix:
+#     weight:
+#     #   values: [0.05, 0.1, 0.33, 1, 2]
+#       # values: [0.25, 0.5, 1, 2, 4]
+#       values: [6, 8, 10]
+
+build:
+    image: docker.dm-ai.cn/algorithm-research/matteraux:latest
+environment:
+    resources:
+        cpu:
+            requests: 1
+            limits: 2
+        gpu:
+            requests: 1
+            limits: 1
+    outputs:
+        experiments: [26699]
+inputs:
+  - name: name
+    is_optional: true
+    type: str
+
+run:
+    cmd: python3.6  r2r_src/train.py
+      --upload
+      --aux_option
+      --submit
+      --name {{ name }}
+      --attn soft --train auglistener --selfTrain
+      --aug tasks/R2R/data/aug_paths.json
+      --load snap/auxrn_final_v1_dense_25571/state_dict/best_val_unseen
+      --angleFeatSize 128
+      --accumulateGrad
+      --featdropout 0.4
+      --subout max --optim rms --lr 1e-4 --iters 200000 --maxAction 35
+      --denseObj --objthr=0.99 --catfeat=none
+      --speWeight 2 --proWeight 0.25 --modpro --no_train_rl
+      --matWeight 0.1 --modmat --feaWeight 4 --angWeight 2 --modfea --mask_fea --save_iter 1000
