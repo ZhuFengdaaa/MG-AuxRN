@@ -16,6 +16,8 @@ cd img_features
 unzip ResNet-152-imagenet.zip
 ```
 
+Download object features [here](https://drive.google.com/drive/folders/1u5cSqFOKaleQWc9puv3hzRPqKLi43R_c?usp=sharing)
+
 Python requirements: Need python3.6 (python 3.5 should be OK since I removed the allennlp dependencies)
 ```
 pip install -r python_requirements.txt
